@@ -1,6 +1,7 @@
 package com.potoware.springboot.backend.apirest.models.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,6 +13,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name="clientes")
@@ -21,9 +26,17 @@ public class Cliente implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "nombre")
+	@NotEmpty(message = "no puede estar vacio")
+	@Size(min = 4, max = 12)
+	@Column(name = "nombre", nullable = false)
 	private String nombre;
+	
+	@NotEmpty(message = "no puede estar vacio")
 	private String apellido;
+	
+	@NotEmpty(message = "no puede estar vacio")
+	@Email(message = "no tiene un formato valido")
+	@Column(nullable = false, unique = true)
 	private String email;
 	
 	@Column(name = "create_at")
